@@ -1,20 +1,10 @@
-from flask import Flask, render_template, request, jsonify
-import json
-import os
+from flask import Flask, render_template, request
+from cliente import Cliente
+from gestor_clientes import GestorClientes
 
 app = Flask(__name__)
+gestor = GestorClientes()
 
-# Lista donde se van a almacenar los clientes
-clientes = []
-
-# Función para cargar los clientes desde el archivo json si existe
-def cargar_clientes():
-    if os.path.exists('clientes.json'):
-        with open('clientes.json', 'r') as file:
-            return json.load(file)
-    return []
-
-# Ruta principal para el formulario de registro
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
@@ -22,21 +12,26 @@ def index():
         correo = request.form['correo']
         nit = request.form['nit']
 
-        clientes.append({'nombre': nombre, 'correo': correo, 'nit': nit})
+        gestor.cargar_clientes()
 
-        # Guardar clientes en archivo json
-        with open('clientes.json', 'w') as file:
-            json.dump(clientes, file)
+        # Se verifica si el nit ya está registrado
+        nits_registrados = [cliente['nit'] for cliente in gestor.obtener_clientes()]
+        if nit in nits_registrados:
+            return render_template('index.html', mensaje='¡Error! Este NIT ya está registrado.', mostrar_tabla=False)
+
+        # Si el nit no existe se agrega el cliente a la lista
+        nuevo_cliente = Cliente(nombre, correo, nit)
+        gestor.agregar_cliente(nuevo_cliente.__dict__)
+        gestor.guardar_clientes()
 
         return render_template('index.html', mensaje='Cliente registrado con éxito.', mostrar_tabla=False)
     else:
         return render_template('index.html', mostrar_tabla=False)
 
-# Ruta para obtener los clientes
 @app.route('/getClientes', methods=['GET'])
 def get_clientes():
-    clientes_data = cargar_clientes()
-    return render_template('index.html', clientes=clientes_data, mostrar_tabla=True)
+    gestor.cargar_clientes()
+    return render_template('index.html', clientes=gestor.obtener_clientes(), mostrar_tabla=True)
 
 if __name__ == '__main__':
     app.run(debug=True)
