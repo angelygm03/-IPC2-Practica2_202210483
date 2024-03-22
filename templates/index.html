@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro y Visualización de Clientes</title>
+</head>
+<body>
+    <h1>Registro de Cliente</h1>
+    {% if mensaje %}
+        <div>{{ mensaje }}</div>
+    {% endif %}
+    <form action="/" method="post">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" required><br><br>
+        <label for="correo">Correo Electrónico:</label>
+        <input type="email" id="correo" name="correo" required><br><br>
+        <label for="nit">NIT:</label>
+        <input type="text" id="nit" name="nit" required><br><br>
+        <button type="submit">Guardar Cliente</button>
+    </form>
+    
+    {% if mostrar_tabla %}
+        <h2>Clientes Registrados</h2>
+        <table border="1">
+            <tr>
+                <th>Nombre</th>
+                <th>Correo Electrónico</th>
+                <th>NIT</th>
+            </tr>
+            {% for cliente in clientes %}
+            <tr>
+                <td>{{ cliente.nombre }}</td>
+                <td>{{ cliente.correo }}</td>
+                <td>{{ cliente.nit }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+
+    {% if not mostrar_tabla %}
+        <form action="/getClientes" method="get">
+            <button type="submit">Ver Clientes</button>
+        </form>
+    {% endif %}
+</body>
+</html>
