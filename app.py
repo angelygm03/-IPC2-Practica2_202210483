@@ -14,9 +14,17 @@ def index():
 
         gestor.cargar_clientes()
 
+        # Validar si el nit es un entero positivo
+        try:
+            nit_entero = int(nit)
+            if nit_entero <= 0:
+                raise ValueError("El NIT debe ser un entero positivo.")
+        except ValueError:
+            return render_template('index.html', mensaje='¡Error! Por favor, ingresa un NIT válido.', mostrar_tabla=False)
+
         # Se verifica si el nit ya está registrado
         nits_registrados = [cliente['nit'] for cliente in gestor.obtener_clientes()]
-        if nit in nits_registrados:
+        if nit_entero in nits_registrados:
             return render_template('index.html', mensaje='¡Error! Este NIT ya está registrado.', mostrar_tabla=False)
 
         # Si el nit no existe se agrega el cliente a la lista

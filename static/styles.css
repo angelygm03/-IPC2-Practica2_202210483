@@ -3,20 +3,30 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
+    background-color: blanchedalmond;
+}
+
+.container-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; 
+}
+label {
+    font-size: 18px;
 }
 
 .container {
-    max-width: 800px;
-    margin: 0 auto;
+    max-width: auto;
     padding: 20px;
+    background-color: #fefcfc;
+    border-radius: 9px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 /* Estilos para el formulario */
 form {
-    background-color: #f9f9f9;
     padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 input[type="text"],
@@ -26,19 +36,22 @@ input[type="email"] {
     margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    font-size: 18px;
 }
 
 button[type="submit"] {
-    background-color: #4CAF50;
+    background-color: #2a73d2;
     color: white;
-    padding: 10px 20px;
+    padding: 10px 10px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    font-size: 14px;
+    width: 400px;
 }
 
 button[type="submit"]:hover {
-    background-color: #45a049;
+    background-color: #0954b6;
 }
 
 /* Estilos para la tabla */
@@ -47,13 +60,47 @@ table {
     border-collapse: collapse;
 }
 
+h1, h2 {
+    text-align: center;
+}
 th, td {
     padding: 10px;
     text-align: left;
     border-bottom: 1px solid #ddd;
 }
 
+/* Estilos para el encabezado */
 th {
-    background-color: #4CAF50;
+    background-color: #2a73d2;
     color: white;
+    /* Agregar sombreado al encabezado */
+    box-shadow: 0px 5px 5px -5px rgba(0,0,0,0.75);
+}
+
+/* Estilos para las filas pares e impares */
+tr:nth-child(even) {
+    background-color: #f2f2f2; /* Cambia el color de fondo de las filas pares */
+}
+
+tr:nth-child(odd) {
+    background-color: #ffffff; /* Cambia el color de fondo de las filas impares */
+}
+
+.alert {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid transparent;
+    border-radius: 5px;
+}
+
+.alert-success {
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+    color: #3c763d;
+}
+
+.alert-error {
+    background-color: #f2dede;
+    border-color: #ebccd1;
+    color: #a94442;
 }
